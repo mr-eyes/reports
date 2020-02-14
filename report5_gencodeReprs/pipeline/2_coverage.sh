@@ -22,11 +22,11 @@ trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
 # 1. Aligning the "reps_unitigs_SRR11015356_before_k75.fa" on the "extractedGTF_gencode.v33.transcripts.fa"
 
 ## 1.1 Indexing 
-bowtie2-build extractedGTF_gencode.v33.transcripts.fa bowtie2_extractedGTF_gencode.v33.transcripts
-samtools faidx extractedGTF_gencode.v33.transcripts.fa # Important for IGV Visualization
+#bowtie2-build /home/mabuelanin/Desktop/kexpression_experiment/symbolic/reports/report5_gencodeReprs/extractedGTF_gencode.v33.transcripts.fa bowtie2_extractedGTF_gencode.v33.transcripts
+#samtools faidx /home/mabuelanin/Desktop/kexpression_experiment/symbolic/reports/report5_gencodeReprs/extractedGTF_gencode.v33.transcripts.fa # Important for IGV Visualization
 
 ## 1.1 Aligning
-bowtie2 -x bowtie2_extractedGTF_gencode.v33.transcripts -U reps_unitigs_SRR11015356_before_k75.fa -S bowtie2_reps_unitigs_SRR11015356_before_k75.sam
+bowtie2 -x bowtie2_extractedGTF_gencode.v33.transcripts -f reps_unitigs_SRR11015356_before_k75.fa -S bowtie2_reps_unitigs_SRR11015356_before_k75.sam
 
 ## 1.2 Converting to sorted BAM
 samtools view -S -b bowtie2_reps_unitigs_SRR11015356_before_k75.sam -o bowtie2_reps_unitigs_SRR11015356_before_k75.bam
@@ -42,7 +42,7 @@ cat sorted_bowtie2_reps_unitigs_SRR11015356_before_k75.bam.cov | awk -F'\t' '{pr
 
 ## ---------------------------------------------------
 
-# 2. Aligning the "reps_unitigs_SRR11015356_before_k75_after_k25.fa" on the "extractedGTF_gencode.v33.transcripts.fa"
+# 2. Aligning the "reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa" on the "extractedGTF_gencode.v33.transcripts.fa"
 
 ## 2.1 Indexing [Done in step #1]
 # bowtie2-build extractedGTF_gencode.v33.transcripts.fa bowtie2_extractedGTF_gencode.v33.transcripts
@@ -50,7 +50,7 @@ cat sorted_bowtie2_reps_unitigs_SRR11015356_before_k75.bam.cov | awk -F'\t' '{pr
 
 
 ## 2.1 Aligning
-bowtie2 -x bowtie2_extractedGTF_gencode.v33.transcripts -U reps_unitigs_SRR11015356_before_k75_after_k25.fa -S reps_unitigs_SRR11015356_before_k75_after_k25.sam
+bowtie2 -x bowtie2_extractedGTF_gencode.v33.transcripts -f reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa -S reps_unitigs_SRR11015356_before_k75_after_k25.sam
 
 
 ## 2.2 Converting to sorted BAM
@@ -77,3 +77,22 @@ paste sorted_bowtie2_reps_unitigs_SRR11015356_before_k75.bam.cov.hist sorted_bow
 # 4. IGV Visualization
 
 ## 4.1 Indexing the unitigs files
+
+
+<<ALIGN_STATS
+1.
+2528169 reads; of these:
+  2528169 (100.00%) were unpaired; of these:
+    2381769 (94.21%) aligned 0 times
+    38856 (1.54%) aligned exactly 1 time
+    107544 (4.25%) aligned >1 times
+5.79% overall alignment rate
+----
+2.
+1993007 reads; of these:
+  1993007 (100.00%) were unpaired; of these:
+    1895443 (95.10%) aligned 0 times
+    25712 (1.29%) aligned exactly 1 time
+    71852 (3.61%) aligned >1 times
+4.90% overall alignment rate
+ALIGN_STATS
