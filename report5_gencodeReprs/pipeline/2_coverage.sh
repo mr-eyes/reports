@@ -50,29 +50,29 @@ cat sorted_bowtie2_reps_unitigs_SRR11015356_before_k75.bam.cov | awk -F'\t' '{pr
 
 
 ## 2.1 Aligning
-bowtie2 -x bowtie2_extractedGTF_gencode.v33.transcripts -f reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa -S reps_unitigs_SRR11015356_before_k75_after_k25.sam
+bowtie2 -x bowtie2_extractedGTF_gencode.v33.transcripts -f reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa -S reps_unitigs_SRR11015356_before_k75_after_k75.sam
 
 
 ## 2.2 Converting to sorted BAM
-samtools view -S -b reps_unitigs_SRR11015356_before_k75_after_k25.sam -o bowtie2_reps_unitigs_SRR11015356_before_k75_after_k25.bam
-samtools sort bowtie2_reps_unitigs_SRR11015356_before_k75_after_k25.bam -o sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k25.bam
+samtools view -S -b reps_unitigs_SRR11015356_before_k75_after_k75.sam -o bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools sort bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam -o sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 
 ## 2.3 Generating coverage histogram
-samtools index sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k25.bam
-samtools depth sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k25.bam > sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k25.bam.cov
-cat sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k25.bam.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k25.bam.cov.hist
+samtools index sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools depth sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam > sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov
+cat sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist
 
 
 ## 2.4 [Optional] View the alignment in the terminal
-# samtools tview sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k25.bam extractedGTF_gencode.v33.transcripts.fa
+# samtools tview sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam extractedGTF_gencode.v33.transcripts.fa
 
 
 ## ---------------------------------------------------
 
 # 3. Merging the two histograms
 
-paste sorted_bowtie2_reps_unitigs_SRR11015356_before_k75.bam.cov.hist sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k25.bam.cov.hist > before_after_cov.hist
+paste sorted_bowtie2_reps_unitigs_SRR11015356_before_k75.bam.cov.hist sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist > before_after_cov.hist
 
 # 4. IGV Visualization
 
