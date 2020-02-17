@@ -144,6 +144,21 @@ samtools index sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 ---
 
+
+## **Get the unique mapped reads only**
+
+> <https://www.biostars.org/p/56246/>
+
+```bash
+
+samtools view -bq 1 sorted_bowtie2_SRR11015356_before_k75.unitigs.bam > uniq_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
+samtools view -bq 1 sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam > uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools index uniq_sorted_bowtie2_SRR11015356_before_k75.bam
+samtools index uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+
+```
+
+
 ## Calculating depth and coverage
 
 ```bash
