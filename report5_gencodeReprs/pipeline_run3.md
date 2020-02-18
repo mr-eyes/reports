@@ -95,10 +95,10 @@ with open(new_fasta, 'w') as fasta_writer:
 
 ---
 
-## **Alignment**
+## **1. Alignment**
 
 ```bash
-# # 1. Aligning the "SRR11015356_before_k75.unitigs.fa" on the "extractedGTF_gencode.v33.transcripts.fa"
+# # 1. Aligning the "SRR11015356_before_k75.unitigs.fa" on the "longIso_extractedGTF_gencode.v33.transcripts.fa"
 
 # ## 1.1 Indexing
 bowtie2-build /home/mabuelanin/Desktop/kexpression_experiment/symbolic/reports/report5_gencodeReprs/longIso_extractedGTF_gencode.v33.transcripts.fa longIso_extractedGTF_gencode.v33.transcripts
@@ -115,11 +115,26 @@ samtools sort bowtie2_SRR11015356_before_k75.unitigs.bam -o sorted_bowtie2_SRR11
 samtools index sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
 
 ## 1.4 [Optional] View the alignment in the terminal
-# samtools tview sorted_bowtie2_reps_unitigs_SRR11015356_before_k75.bam extractedGTF_gencode.v33.transcripts.fa
+# samtools tview sorted_bowtie2_reps_unitigs_SRR11015356_before_k75.bam longIso_extractedGTF_gencode.v33.transcripts.fa
+
+```
+
+### 1.5 Alignment summary
+
+```txt
+11824622 reads; of these:
+  11824622 (100.00%) were unpaired; of these:
+    10621664 (89.83%) aligned 0 times
+    929026 (7.86%) aligned exactly 1 time
+    273932 (2.32%) aligned >1 times
+10.17% overall alignment rate
+```
+
+```bash
 
 ## ---------------------------------------------------
 
-# 2. Aligning the "reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa" on the "extractedGTF_gencode.v33.transcripts.fa"
+# 2. Aligning the "reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa" on the "longIso_extractedGTF_gencode.v33.transcripts.fa"
 
 ## 2.1 Indexing [Done in step #1]
 
@@ -142,10 +157,21 @@ samtools index sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 ```
 
+## 2.5 Alginemnt summary
+
+```txt
+1993007 reads; of these:
+  1993007 (100.00%) were unpaired; of these:
+    1899598 (95.31%) aligned 0 times
+    80909 (4.06%) aligned exactly 1 time
+    12500 (0.63%) aligned >1 times
+4.69% overall alignment rate
+```
+
 ---
 
 
-## **Get the unique mapped reads only**
+## **3. Get the unique mapped reads only from the BAM file**
 
 > <https://www.biostars.org/p/56246/>
 
@@ -153,13 +179,12 @@ samtools index sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 samtools view -bq 1 sorted_bowtie2_SRR11015356_before_k75.unitigs.bam > uniq_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
 samtools view -bq 1 sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam > uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
-samtools index uniq_sorted_bowtie2_SRR11015356_before_k75.bam
+samtools index uniq_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
 samtools index uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 ```
 
-
-## Calculating depth and coverage
+## 4. Calculating depth and coverage
 
 ```bash
 
@@ -168,5 +193,15 @@ cat sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov | awk -F'\t' '{print $
 
 samtools depth sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam > sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov
 cat sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist
+
+```
+
+## 5. Delete dead files
+
+```bash
+
+rm bowtie2_SRR11015356_before_k75.unitigs.bam
+rm bowtie2_SRR11015356_before_k75.unitigs.sam
+
 
 ```
