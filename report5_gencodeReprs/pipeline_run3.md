@@ -232,4 +232,4 @@ rm bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.sam
 
 ## **6.2 IGV**
 
-**[Coverge](./IGV)**
+**[IGV](./IGV)**
