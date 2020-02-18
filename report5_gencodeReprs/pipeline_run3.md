@@ -171,16 +171,16 @@ samtools index sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 ---
 
 
-## **3. Get the unique mapped reads only from the BAM file**
+## **3. Get the primary alignments only from the BAM file**
 
-> <https://www.biostars.org/p/56246/>
+> <https://www.biostars.org/p/259963/>
 
 ```bash
 
-samtools view -bq 1 sorted_bowtie2_SRR11015356_before_k75.unitigs.bam > uniq_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
-samtools view -bq 1 sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam > uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
-samtools index uniq_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
-samtools index uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools view -F 256 sorted_bowtie2_SRR11015356_before_k75.unitigs.bam > primary_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
+samtools view -F 256 sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam > primary_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools index primary_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
+samtools index primary_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 ```
 
@@ -191,14 +191,14 @@ samtools index uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75
 # Before 75
 
 BAM_FILE1=sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
-BAM_FILE2=uniq_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
+BAM_FILE2=primary_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
 samtools depth ${BAM_FILE1} > ${BAM_FILE1}.cov
 samtools depth ${BAM_FILE2} > ${BAM_FILE2}.cov
 cat ${BAM_FILE1}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE1}.cov.hist
 cat ${BAM_FILE2}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE2}.cov.hist
 
 # After 75
-BAM_FILE1=uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+BAM_FILE1=primary_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 BAM_FILE2=sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 samtools depth ${BAM_FILE1} > ${BAM_FILE1}.cov
 samtools depth ${BAM_FILE2} > ${BAM_FILE2}.cov
@@ -206,7 +206,7 @@ cat ${BAM_FILE1}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE1
 cat ${BAM_FILE2}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE2}.cov.hist
 
 # Merging histograms
-paste uniq_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov.hist uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist > uniq_before_after_cov.hist.tsv
+paste primary_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov.hist primary_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist > primary_before_after_cov.hist.tsv
 paste sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov.hist sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist > before_after_cov.hist.tsv
 
 ```
@@ -233,3 +233,25 @@ rm bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.sam
 ## **6.2 IGV**
 
 **[IGV](./IGV)**
+
+
+//
+Best kmer size (kmerr counting and graph histo)
+count k abundance > 1
+
+1- poly, error, homologus seqs, pseudogenes, splicing events.
+
+cdhit > ssake > bcalm
+
+0- Create from the raw reads
+1- Extension using SSAKE after the CDHIT
+2- Get the longest from SSAKE and compare it to the repr from CDHIT cluster: Length of the two sequences and report the stats
+3- Create cDBG ssake_after_75 for the SSAKE reps
+4- Rerun 1,2,3 for one time. >> rename to ssake_after_75_2
+
+
+
+1- Representitive transcriptome: total number of unique kmers with abundance > 1 for each kmer size (k25:k31:k41:k51:k61:75:81).
+2- Create cDBG with the optimum kmer size from step #1.
+3- Run the CD-HIT on the unitigs at different sim. threshold 90:99:3
+4- Plot: Count the clusters having more than one sequence.
