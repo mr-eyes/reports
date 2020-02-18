@@ -188,11 +188,26 @@ samtools index uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75
 
 ```bash
 
-samtools depth sorted_bowtie2_SRR11015356_before_k75.unitigs.bam > sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov
-cat sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov.hist
+# Before 75
 
-samtools depth sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam > sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov
-cat sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist
+BAM_FILE1=sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
+BAM_FILE2=uniq_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
+samtools depth ${BAM_FILE1} > ${BAM_FILE1}.cov
+samtools depth ${BAM_FILE2} > ${BAM_FILE2}.cov
+cat ${BAM_FILE1}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE1}.cov.hist
+cat ${BAM_FILE2}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE2}.cov.hist
+
+# After 75
+BAM_FILE1=uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+BAM_FILE2=sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools depth ${BAM_FILE1} > ${BAM_FILE1}.cov
+samtools depth ${BAM_FILE2} > ${BAM_FILE2}.cov
+cat ${BAM_FILE1}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE1}.cov.hist
+cat ${BAM_FILE2}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE2}.cov.hist
+
+# Merging histograms
+paste uniq_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov.hist uniq_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist > uniq_before_after_cov.hist.tsv
+paste sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov.hist sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist > before_after_cov.hist.tsv
 
 ```
 
@@ -202,6 +217,11 @@ cat sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov | awk -
 
 rm bowtie2_SRR11015356_before_k75.unitigs.bam
 rm bowtie2_SRR11015356_before_k75.unitigs.sam
-
+rm bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+rm bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.sam
 
 ```
+
+# **Results**
+
+[Coverge](./coverage)
