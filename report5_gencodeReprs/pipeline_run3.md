@@ -222,6 +222,14 @@ rm bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.sam
 
 ```
 
-# **Results**
+--
 
-[Coverge](./coverage)
+# **6. Results**
+
+## **6.1 Coverage**
+
+**[Coverge](./coverage)**
+
+## **6.2 IGV**
+
+**[Coverge](./IGV)**
