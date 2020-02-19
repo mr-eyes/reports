@@ -26,7 +26,7 @@ for K in 25 31 41 51 75 81;
 do
     jellyfish count -m ${K} -s 250M -t 10 -C longIso_extractedGTF_gencode.v33.transcripts.fa;
     TOTAL_KMERS=$(jellyfish dump mer_counts.jf  | grep ">" | wc -l);
-    UNIQ_KMERS=$(jellyfish dump mer_counts.jf  | grep ">" | grep -o "[[:digit:]]*" | awk -F: '$NF+0 > 1' | wc -l);
+    UNIQ_KMERS=$(jellyfish dump mer_counts.jf  | awk -F">" '{if($2>1)a+=1}END{print a}');
     echo -e "${K}\t${UNIQ_KMERS}\t${TOTAL_KMERS}" >> ${HISTO_TSV};
     rm mer_counts.jf;
 done
