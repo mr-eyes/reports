@@ -233,25 +233,3 @@ rm bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.sam
 ## **6.2 IGV**
 
 **[IGV](./IGV)**
-
-
-//
-Best kmer size (kmerr counting and graph histo)
-count k abundance > 1
-
-1- poly, error, homologus seqs, pseudogenes, splicing events.
-
-cdhit > ssake > bcalm
-
-0- Create from the raw reads
-1- Extension using SSAKE after the CDHIT
-2- Get the longest from SSAKE and compare it to the repr from CDHIT cluster: Length of the two sequences and report the stats
-3- Create cDBG ssake_after_75 for the SSAKE reps
-4- Rerun 1,2,3 for one time. >> rename to ssake_after_75_2
-
-
-
-1- Representitive transcriptome: total number of unique kmers with abundance > 1 for each kmer size (k25:k31:k41:k51:k61:75:81).
-2- Create cDBG with the optimum kmer size from step #1.
-3- Run the CD-HIT on the unitigs at different sim. threshold 90:99:3
-4- Plot: Count the clusters having more than one sequence.
