@@ -2,13 +2,13 @@
 
 ## *Summary*
 
-1. Abundance plot:
+1. [x] Abundance plot:
     1. Reference: `longIso_extractedGTF_gencode.v33.transcripts.fa`
     2. k-mers to test: {25,31,41,51,75,81}
     3. Scatter plot with x-axis:kmer_size, y-axis:number of unique kmers with abundance > 1.
     4. By visual inspection, select the best k-mer size for the next steps.
-2. Create cDBG with the optimum kmer size from step #1.
-3. Clustering similarity threshold:
+2. [x] Create cDBG with the optimum kmer size from step #1.
+3. [ ] Clustering similarity threshold:
     1. Run the CD-HIT-EST on the unitigs at different similarity threshold {90,93,96,99}.
     2. Scatter plot with x-axis: similarity threshold, y-axis: number of clusters with size > 1.
 
@@ -75,3 +75,38 @@ plt.show()
 ### 1.4.1 Plot 2 (Log scaled)
 
 ![](kmers_histo_log.png?raw=true)
+
+---
+
+## 2. Constructing cDBG for the reference file longIso_extractedGTF_gencode.v33.transcripts.fa
+
+```bash
+OPTIMUM_KSIZE=75
+bcalm -kmer-size ${OPTIMUM_KSIZE} -max-memory 12000 -out cDBG_longIso_extractedGTF_gencode.v33.transcripts -in longIso_extractedGTF_gencode.v33.transcripts.fa &> cDBGlongIso_extractedGTF_gencode.v33.transcripts.log
+
+rm *glue* *h5
+
+```
+
+## 3. CDHIT Clustering
+
+```bash
+
+WORD_SIZE=9
+for SIM in 0.90 0.93
+do
+
+    cd-hit-est -i cDBG_longIso_extractedGTF_gencode.v33.transcripts.unitigs.fa -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_longIso_extractedGTF_gencode.v33.transcripts.unitigs -d 0 -T 0 -M 12000 &> cdhit_${SIM}.log
+
+done
+
+WORD_SIZE=11
+for SIM in 0.96 0.99
+do
+
+    cd-hit-est -i cDBG_longIso_extractedGTF_gencode.v33.transcripts.unitigs.fa -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_longIso_extractedGTF_gencode.v33.transcripts.unitigs -d 0 -T 0 -M 12000 &> cdhit_${SIM}.log
+
+done
+
+
+```
