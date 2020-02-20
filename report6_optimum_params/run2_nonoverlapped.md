@@ -160,6 +160,11 @@ plt.show()
 
 ### 3.2.1 Plots and Data
 
+```txt
+notes:
+    - Number of clusters = number of representative sequences from CDHIT
+```
+
 ```json
 {
    "large_clusters":{
