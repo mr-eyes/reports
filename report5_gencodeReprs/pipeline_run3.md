@@ -1,5 +1,11 @@
 # Pipeline run3
 
+## TODO
+
+- [ ] Remove the contained genes
+- [ ] Clustering CDHIT at 99% then repeat repor6.
+- [ ] Divide the total clusters by 10.
+
 ## **Generate cDBGs**
 
 ```bash
@@ -228,8 +234,8 @@ rm bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.sam
 
 ## **6.1 Coverage**
 
-**[Coverge](./coverage)**
+**[Coverge](./run_3_coverage)**
 
 ## **6.2 IGV**
 
-**[IGV](./IGV)**
+**[IGV](./run_3_IGV)**
