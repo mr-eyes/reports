@@ -3,14 +3,14 @@
 ## *Summary*
 
 1. [x] Abundance plot:
-    1. Reference: `longIso_extractedGTF_gencode.v33.transcripts.fa`
+    1. Reference: `nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa`
     2. k-mers to test: {25,31,41,51,75,81}
     3. Scatter plot with x-axis:kmer_size, y-axis:number of unique kmers with abundance > 1.
     4. By visual inspection, select the best k-mer size for the next steps.
 2. [x] Create cDBG with the optimum kmer size from step #1.
-3. [ ] Clustering similarity threshold:
+3. [x] Clustering similarity threshold:
     1. [x] Run the CD-HIT-EST on the unitigs at different similarity threshold {90,93,96,99}.
-    2. Scatter plot with x-axis: similarity threshold, y-axis: number of clusters with size > 1.
+    2. [x] Scatter plot with x-axis: similarity threshold, y-axis: number of clusters with size > 1.
 
 ## **1. Optimum k-mer size**
 
@@ -24,7 +24,7 @@ echo -e "kSize\tkmers>1\ttotal_kmers" >> ${HISTO_TSV}
 
 for K in 25 31 41 51 75 81;
 do
-    jellyfish count -m ${K} -s 250M -t 10 -C longIso_extractedGTF_gencode.v33.transcripts.fa;
+    jellyfish count -m ${K} -s 250M -t 10 -C nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa;
     TOTAL_KMERS=$(jellyfish dump mer_counts.jf  | grep ">" | wc -l);
     UNIQ_KMERS=$(jellyfish dump mer_counts.jf  | awk -F">" '{if($2>1)a+=1}END{print a}');
     echo -e "${K}\t${UNIQ_KMERS}\t${TOTAL_KMERS}" >> ${HISTO_TSV};
@@ -36,13 +36,14 @@ done
 
 ### 1.3 Histogram
 
-```json
-{'25': 6225004,
- '31': 5825143,
- '41': 5308103,
- '51': 4930689,
- '75': 4335645,
- '81': 4226369}
+```tsv
+kSize	kmers>1	total_kmers
+25	3466029	89464767
+31	3139993	90421021
+41	2739366	91196188
+51	2463775	91422034
+75	2066541	91080253
+81	1999465	90920059
 ```
 
 ### 1.4 Histogram visualization
@@ -70,19 +71,19 @@ plt.show()
 
 ### 1.4.1 Plot 1
 
-![](run1_kmers_histo.png?raw=true)
+![](run2_kmers_histo.png?raw=true)
 
 ### 1.4.1 Plot 2 (Log scaled)
 
-![](run1_kmers_histo_log.png?raw=true)
+![](run2_kmers_histo_log.png?raw=true)
 
 ---
 
-## 2. Constructing cDBG for the reference file longIso_extractedGTF_gencode.v33.transcripts.fa
+## 2. Constructing cDBG for the reference file nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa
 
 ```bash
 OPTIMUM_KSIZE=75
-bcalm -kmer-size ${OPTIMUM_KSIZE} -max-memory 12000 -out cDBG_longIso_extractedGTF_gencode.v33.transcripts -in longIso_extractedGTF_gencode.v33.transcripts.fa &> cDBGlongIso_extractedGTF_gencode.v33.transcripts.log
+bcalm -kmer-size ${OPTIMUM_KSIZE} -max-memory 12000 -out cDBG_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts -in nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa &> cDBGlongIso_nonoverlap_extractedGTF_gencode.v33.transcripts.log
 
 rm *glue* *h5
 
@@ -96,7 +97,7 @@ WORD_SIZE=9
 for SIM in 0.90 0.93
 do
 
-    cd-hit-est -i cDBG_longIso_extractedGTF_gencode.v33.transcripts.unitigs.fa -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_longIso_extractedGTF_gencode.v33.transcripts.unitigs -d 0 -T 0 -M 12000 &> cdhit_${SIM}.log
+    cd-hit-est -i cDBG_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.unitigs.fa -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.unitigs -d 0 -T 0 -M 12000 &> cdhit_${SIM}.log
 
 done
 
@@ -104,7 +105,7 @@ WORD_SIZE=11
 for SIM in 0.96 0.99
 do
 
-    cd-hit-est -i cDBG_longIso_extractedGTF_gencode.v33.transcripts.unitigs.fa -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_longIso_extractedGTF_gencode.v33.transcripts.unitigs -d 0 -T 0 -M 12000 &> cdhit_${SIM}.log
+    cd-hit-est -i cDBG_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.unitigs.fa -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.unitigs -d 0 -T 0 -M 12000 &> cdhit_${SIM}.log
 
 done
 
@@ -157,6 +158,8 @@ plt.show()
 
 ```
 
-### 3.2.1 Plot
+### 3.2.1 Plots
 
-![](run1_cdhit_histo.png?raw=true)
+![](run2_cdhit_histo_raw.png?raw=true)
+
+![](run2_cdhit_histo_x10.png?raw=true)
