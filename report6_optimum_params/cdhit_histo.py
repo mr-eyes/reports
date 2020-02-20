@@ -16,7 +16,7 @@ def fasta_iter(fasta_name):
 
 histo = {
     "large_clusters" : dict(),
-    "total_clusters" : dict(),
+    "total_clusters x10" : dict(),
 }
 
 
@@ -31,8 +31,8 @@ for file in sorted(glob("./*.clstr")):
         if size > 1:
             large_clusters += 1
 
-    histo["total_clusters"][sim_threshold] = total_clusters
-    histo["large_clusters"][sim_threshold] = large_clusters
+    histo["total_clusters x10"][sim_threshold] = total_clusters // 10
+    histo["large_clusters"][sim_threshold] = large_clusters // 10
 
 
 pd.DataFrame(histo).plot(kind='bar')
