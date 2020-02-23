@@ -3,8 +3,7 @@
 ## TODO
 
 - [x] Remove the contained genes
-- [ ] Remove pseudogenes
-- [ ] Clustering CDHIT at 99% then repeat repor6.
+- [x] Remove pseudogenes
 
 ## **Generate cDBGs**
 
