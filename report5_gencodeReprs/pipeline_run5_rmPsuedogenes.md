@@ -187,11 +187,11 @@ with open(new_fasta, 'w') as fasta_writer:
 cat nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa | seqkit grep -w 0 -v -n -r -p pseudogene > noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa
 ```
 
-> Reduced by 14389 sequences
+> Reduced by 11205 sequences
 
 ```tsv
 file                                                                 format  type  num_seqs      sum_len  min_len  avg_len  max_len
-longIso_extractedGTF_gencode.v33.transcripts.fa                      FASTA   DNA     60,662  113,526,569        8  1,871.5  205,012
+nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa           FASTA   DNA     46,934   97,352,548        8  2,074.2  205,012
 noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa  FASTA   DNA     35,729   89,088,742        8  2,493.5  205,012
 ```
 
@@ -203,18 +203,18 @@ noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa  FASTA   DNA
 # # 1. Aligning the "SRR11015356_before_k75.unitigs.fa" on the "noPseudo_longIso_extractedGTF_gencode.v33.transcripts.fa"
 
 # ## 1.1 Indexing
-bowtie2-build /home/mabuelanin/Desktop/kexpression_experiment/symbolic/reports/report5_gencodeReprs/noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa noPsuedo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts
-samtools faidx /home/mabuelanin/Desktop/kexpression_experiment/symbolic/reports/report5_gencodeReprs/noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa  # Important for IGV Visualization
+bowtie2-build noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa noPsuedo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts
+samtools faidx noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa  # Important for IGV Visualization
 
 ## 1.1 Aligning
-bowtie2 -x nonoverlap_longIso_extractedGTF_gencode.v33.transcripts -f SRR11015356_before_k75.unitigs.fa -S bowtie2_SRR11015356_before_k75.unitigs.sam
+bowtie2 -p 4 -x noPsuedo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts -f SRR11015356_before_k75.unitigs.fa -S bowtie2_SRR11015356_before_k75.unitigs.sam
 
 ## 1.2 Converting to sorted BAM
-samtools view -S -b bowtie2_SRR11015356_before_k75.unitigs.sam -o bowtie2_SRR11015356_before_k75.unitigs.bam
-samtools sort bowtie2_SRR11015356_before_k75.unitigs.bam -o sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
+samtools view -S -b bowtie2_SRR11015356_before_k75.unitigs.sam -o noPsuedo_bowtie2_SRR11015356_before_k75.unitigs.bam
+samtools sort noPsuedo_bowtie2_SRR11015356_before_k75.unitigs.bam -o sorted_noPsuedo_bowtie2_SRR11015356_before_k75.unitigs.bam
 
 ## 1.3 Indexing BAM file
-samtools index sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
+samtools index sorted_noPsuedo_bowtie2_SRR11015356_before_k75.unitigs.bam
 
 ## 1.4 [Optional] View the alignment in the terminal
 # samtools tview sorted_bowtie2_reps_unitigs_SRR11015356_before_k75.bam nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa
@@ -226,10 +226,10 @@ samtools index sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
 ```txt
 11824622 reads; of these:
   11824622 (100.00%) were unpaired; of these:
-    10680880 (90.33%) aligned 0 times
-    934329 (7.90%) aligned exactly 1 time
-    209413 (1.77%) aligned >1 times
-9.67% overall alignment rate
+    10716275 (90.63%) aligned 0 times
+    1010683 (8.55%) aligned exactly 1 time
+    97664 (0.83%) aligned >1 times
+9.37% overall alignment rate
 ```
 
 ```bash
@@ -242,16 +242,16 @@ samtools index sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
 
 
 ## 2.1 Aligning
-bowtie2 -x nonoverlap_longIso_extractedGTF_gencode.v33.transcripts -f reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa -S reps_unitigs_SRR11015356_before_k75_after_k75.sam
+bowtie2 -p 4 -x noPsuedo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts -f reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa -S reps_unitigs_SRR11015356_before_k75_after_k75.sam
 
 
 ## 2.2 Converting to sorted BAM
-samtools view -S -b reps_unitigs_SRR11015356_before_k75_after_k75.sam -o bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
-samtools sort bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam -o sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools view -S -b reps_unitigs_SRR11015356_before_k75_after_k75.sam -o noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools sort noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam -o sorted_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 
 ## 2.3 Generating coverage histogram
-samtools index sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools index sorted_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 
 ## 2.4 [Optional] View the alignment in the terminal
@@ -264,10 +264,10 @@ samtools index sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 ```txt
 1993007 reads; of these:
   1993007 (100.00%) were unpaired; of these:
-    1904098 (95.54%) aligned 0 times
-    80193 (4.02%) aligned exactly 1 time
-    8716 (0.44%) aligned >1 times
-4.46% overall alignment rate
+    1905087 (95.59%) aligned 0 times
+    84044 (4.22%) aligned exactly 1 time
+    3876 (0.19%) aligned >1 times
+4.41% overall alignment rate
 ```
 
 ---
@@ -279,20 +279,20 @@ samtools index sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 ```bash
 
 # Remove non-primary reads
-samtools view -h -F 256 sorted_bowtie2_SRR11015356_before_k75.unitigs.bam > primary_bowtie2_SRR11015356_before_k75.unitigs.sam
-samtools view -h -F 256 sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam > primary_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.sam
+samtools view -h -F 256 sorted_noPsuedo_bowtie2_SRR11015356_before_k75.unitigs.bam > primary_sorted_noPsuedo_bowtie2_SRR11015356_before_k75.unitigs.bam
+samtools view -h -F 256 sorted_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam > primary_sorted_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 # Convert SAM to BAM
-samtools view -S -b primary_bowtie2_SRR11015356_before_k75.unitigs.sam -o primary_bowtie2_SRR11015356_before_k75.unitigs.bam
-samtools view -S -b primary_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.sam -o primary_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+# samtools view -S -b primary_bowtie2_SRR11015356_before_k75.unitigs.sam -o primary_bowtie2_SRR11015356_before_k75.unitigs.bam
+# samtools view -S -b primary_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.sam -o primary_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 # Sorting
-samtools sort primary_bowtie2_SRR11015356_before_k75.unitigs.bam -o primary_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
-samtools sort primary_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam -o primary_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools sort primary_sorted_noPsuedo_bowtie2_SRR11015356_before_k75.unitigs.bam -o sorted_primary_noPsuedo_SRR11015356_before_k75.unitigs.bam
+samtools sort primary_sorted_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam -o sorted_primary_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 # Indexing
-samtools index primary_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
-samtools index primary_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+samtools index sorted_primary_noPsuedo_SRR11015356_before_k75.unitigs.bam
+samtools index sorted_primary_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 
 ```
 
@@ -301,25 +301,24 @@ samtools index primary_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_
 ```bash
 
 # Before 75
-
-BAM_FILE1=sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
-BAM_FILE2=primary_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam
+BAM_FILE1=sorted_noPsuedo_bowtie2_SRR11015356_before_k75.unitigs.bam
+BAM_FILE2=sorted_primary_noPsuedo_SRR11015356_before_k75.unitigs.bam
 samtools depth ${BAM_FILE1} > ${BAM_FILE1}.cov
 samtools depth ${BAM_FILE2} > ${BAM_FILE2}.cov
 cat ${BAM_FILE1}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE1}.cov.hist
 cat ${BAM_FILE2}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE2}.cov.hist
 
 # After 75
-BAM_FILE1=primary_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
-BAM_FILE2=sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+BAM_FILE1=sorted_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam
+BAM_FILE2=sorted_primary_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam
 samtools depth ${BAM_FILE1} > ${BAM_FILE1}.cov
 samtools depth ${BAM_FILE2} > ${BAM_FILE2}.cov
 cat ${BAM_FILE1}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE1}.cov.hist
 cat ${BAM_FILE2}.cov | awk -F'\t' '{print $3}' | sort -n | uniq -c > ${BAM_FILE2}.cov.hist
 
 # Merging histograms
-paste primary_sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov.hist primary_sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist > primary_before_after_cov.hist.tsv
-paste sorted_bowtie2_SRR11015356_before_k75.unitigs.bam.cov.hist sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist > before_after_cov.hist.tsv
+paste sorted_primary_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist  sorted_primary_noPsuedo_SRR11015356_before_k75.unitigs.bam.cov.hist > primary_before_after_cov.hist.tsv
+paste sorted_noPseudo_reps_unitigs_SRR11015356_before_k75_after_k75.bam.cov.hist  sorted_noPsuedo_bowtie2_SRR11015356_before_k75.unitigs.bam.cov.hist > before_after_cov.hist.tsv
 
 ```
 
@@ -338,10 +337,13 @@ rm bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.sam
 
 # **6. Results**
 
+![](./run_5_IGV/1.png?raw=true)
+
+
 ## **6.1 Coverage**
 
-**[Coverge](./run_3_coverage)**
+**[Coverge](./run_5_coverage)**
 
 ## **6.2 IGV**
 
-**[IGV](./run_4_IGV)**
+**[IGV](./run_5_IGV)**
