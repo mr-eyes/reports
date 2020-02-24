@@ -1,7 +1,5 @@
 # Full pipeline
 
-## Summary
-
 ## **1 Samples downloading & dumping**
 
 ### 1.1
