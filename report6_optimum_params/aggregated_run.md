@@ -104,13 +104,13 @@ for REF_FASTA in $REF1 $REF2 $REF3 $REF4
 do
 
     WORD_SIZE=9
-    for SIM in 0.91 0.93
+    for SIM in 0.91 0.93 0.95
     do
         cd-hit-est -i cDBG_${REF_FASTA}.unitigs.fa -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_${REF_FASTA} -d 0 -T 0 -M 12000 &> log_cdhit_${SIM}_${REF_FASTA}.log
     done
 
     WORD_SIZE=11
-    for SIM in 0.96 0.99
+    for SIM in 0.97 0.99
     do
         cd-hit-est -i cDBG_${REF_FASTA}.unitigs.fa -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_${REF_FASTA} -d 0 -T 0 -M 12000 &> log_cdhit_${SIM}_${REF_FASTA}.log
     done
