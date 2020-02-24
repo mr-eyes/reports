@@ -2,17 +2,9 @@
 
 ## Summary
 
-## **1. Data preparation**
+## **1 Samples downloading & dumping**
 
-### 1.0 Sample download
-
-```bash
-
-
-
-```
-
-### 1.1 Downloading & Dumping
+### 1.1
 
 ```bash
 # Sample reads downloading & dumping
