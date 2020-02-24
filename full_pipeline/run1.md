@@ -4,25 +4,20 @@
 
 ## **1. Data preparation**
 
-### 1.1 Downloading & Dumping
+### 1.0 Sample download
 
 ```bash
 
-#1 Human Transcriptome
-wget -c ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_33/gencode.v33.transcripts.fa.gz
-gunzip gencode.v33.transcripts.fa.gz
 
-#2 Basic gene annotation CHR GTF
-wget -c ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_33/gencode.v33.basic.annotation.gtf.gz
-gunzip gencode.v33.basic.annotation.gtf.gz
 
-#3 Representitive sequences extractions
-python extract_transcripts_from_gtf.py gencode.v33.basic.annotation.gtf gencode.v33.transcripts.fa
+```
 
-#4 Sample reads downloading & dumping
+### 1.1 Downloading & Dumping
+
+```bash
+# Sample reads downloading & dumping
 wget -c https://sra-download.ncbi.nlm.nih.gov/traces/sra51/SRR/010757/SRR11015356 -O SRR11015356.sra
 fastq-dump --fasta 0 --split-files SRR11015356.sra
-
 ```
 
 ### 1.2 cDBG of "SRR11015356_1.fasta" and "SRR11015356_2.fasta" @ k=75
@@ -50,45 +45,56 @@ cat clusters_SRR11015356_before_k75.clstr | grep "\*" | awk -F"[>.]" '{print ">"
 bcalm -kmer-size 75 -max-memory 12000 -out reps_unitigs_SRR11015356_before_k75_after_k75.fa -in reps_unitigs_SRR11015356_before_k75.fa  -abundance-min 1
 ```
 
-### 1.6 Extract the longest isoforms
-
-```bash
-python extract_longest_isoforms.py extractedGTF_gencode.v33.transcripts.fa
-```
-
-### 1.7 Remove overlapped transcripts using the GTF positions
-
-```bash
-python filter_overlaps.py longIso_extractedGTF_gencode.v33.transcripts.fa gencode.v33.basic.annotation.gtf
-```
-
-### 1.8 Filterout pseudogenes
-
-```bash
-cat nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa | seqkit grep -w 0 -v -n -r -p pseudogene > noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa
-```
-
-> Reduced by 11205 sequences
-
-```tsv
-file                                                                 format  type  num_seqs      sum_len  min_len  avg_len  max_len
-nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa           FASTA   DNA     46,934   97,352,548        8  2,074.2  205,012
-noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa  FASTA   DNA     35,729   89,088,742        8  2,493.5  205,012
-```
-
-
 ---
 
 ## 2. Alignment
 
-### 2.1 Indexing
+## 2.1 References preparation
+
+```bash
+
+#1 Download and extract Human Transcriptome
+wget -c ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_33/gencode.v33.transcripts.fa.gz
+gunzip gencode.v33.transcripts.fa.gz
+
+#2 Download and extract the Basic gene annotation CHR GTF
+wget -c ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_33/gencode.v33.basic.annotation.gtf.gz
+gunzip gencode.v33.basic.annotation.gtf.gz
+
+#3 Extract Representitive sequences
+python extract_transcripts_from_gtf.py gencode.v33.basic.annotation.gtf gencode.v33.transcripts.fa
+
+#4 Extract the longest isoforms
+python extract_longest_isoforms.py extractedGTF_gencode.v33.transcripts.fa
+
+#5 Remove overlapped transcripts using the GTF positions
+python filter_overlaps.py longIso_extractedGTF_gencode.v33.transcripts.fa gencode.v33.basic.annotation.gtf
+
+#6 Filterout pseudogenes
+cat nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa | seqkit grep -w 0 -v -n -r -p pseudogene > noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa
+
+```
+
+### 2.1.1 Seqkit stats
+
+`seqkit stats *fa`
+
+```tsv
+file                                                                 format  type  num_seqs      sum_len  min_len  avg_len  max_len
+extractedGTF_gencode.v33.transcripts.fa                              FASTA   DNA    108,784  222,813,863        8  2,048.2  205,012
+longIso_extractedGTF_gencode.v33.transcripts.fa                      FASTA   DNA     60,662  113,526,569        8  1,871.5  205,012
+nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa           FASTA   DNA     46,934   97,352,548        8  2,074.2  205,012
+noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa  FASTA   DNA     35,729   89,088,742        8  2,493.5  205,012
+```
+
+### 2.2 Indexing
 
 ```bash
 samtools faidx noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa
 bowtie2-build noPseudo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts.fa noPsuedo_nonoverlap_longIso_extractedGTF_gencode.v33.transcripts
 ```
 
-### 2.2 Before75_unitigs Alignment
+### 2.3 Before75_unitigs Alignment
 
 ```bash
 
@@ -117,7 +123,7 @@ Alignment summary
 9.37% overall alignment rate
 ```
 
-### 2.3 Before75_after75 Alignment
+### 2.4 Before75_after75 Alignment
 
 ```bash
 
