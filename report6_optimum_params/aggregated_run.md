@@ -57,42 +57,17 @@ kSize	kmers>1	total_kmers
 
 ### 1.4 Histogram visualization
 
-```python
-import matplotlib.pyplot as plt
-import pandas as pd
-import os
-
-
-kmers = [31,41,51,75,81]
-data = dict()
-for k in kmers:
-    data[f"k{k}"] = dict()
-
-
-ref1="test_data/ref1.tsv"
-ref2="test_data/ref2.tsv"
-
-for ref in [ref1, ref2]:
-    with open(ref , 'r') as tsv_reader:
-        for line in tsv_reader:
-            line = line.strip().split()
-            kSize = line[0]
-            uniq = int(line[1])
-            data[f"k{kSize}"][os.path.basename(ref)] = uniq
-
-
-
-pd.DataFrame(data).plot(kind='bar')
-plt.show()
+```bash
+python nested_kCount_histo.py
 ```
 
-### 1.4.1 Plot 1
+### 1.4.1 Plot 1 [Interactive](./plots/agg/plotly_histo.html)
 
-![](agg_kmers_histo.png?raw=true)
+![](./plots/agg/agg_kmers_histo.png?raw=true)
 
-### 1.4.1 Plot 2 (Log scaled)
+### 1.4.1 Plot 2 (Log scaled) [Interactive](./plots/agg/plotly_histo_log.html)
 
-![](agg_kmers_histo_log.png?raw=true)
+![](./plots/agg/agg_kmers_histo_log.png?raw=true)
 
 ---
 
@@ -131,13 +106,13 @@ do
     WORD_SIZE=9
     for SIM in 0.91 0.93
     do
-        cd-hit-est -i cDBG_${REF_FASTA} -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_${REF_FASTA} -d 0 -T 0 -M 12000 &> log_cdhit_${SIM}_${REF_FASTA}.log
+        cd-hit-est -i cDBG_${REF_FASTA}.unitigs.fa -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_${REF_FASTA} -d 0 -T 0 -M 12000 &> log_cdhit_${SIM}_${REF_FASTA}.log
     done
 
     WORD_SIZE=11
     for SIM in 0.96 0.99
     do
-        cd-hit-est -i cDBG_${REF_FASTA} -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_${REF_FASTA} -d 0 -T 0 -M 12000 &> log_cdhit_${SIM}_${REF_FASTA}.log
+        cd-hit-est -i cDBG_${REF_FASTA}.unitigs.fa -n ${WORD_SIZE} -c ${SIM} -o clusters_${SIM}_cDBG_${REF_FASTA} -d 0 -T 0 -M 12000 &> log_cdhit_${SIM}_${REF_FASTA}.log
     done
 
 done
