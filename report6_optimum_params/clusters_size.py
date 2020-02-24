@@ -22,7 +22,7 @@ REFS = [REF1, REF2, REF3, REF4]
 
 
 histo = dict()
-sims = [91,93,95,97,99]
+sims = [91, 93, 95, 97, 99]
 
 for sim in sims:
     histo[f"{sim}%"] = dict()
@@ -32,14 +32,13 @@ for REF_FASTA in REFS:
     for sim in sims:
         file = f"clusters_0.{sim}_cDBG_{REF_FASTA}.clstr"
         large_clusters = 0
-
-        for header, seq in fasta_iter(file):
+        for header, seq in fasta_iter("cdhit_clusters/" + file):
             size = seq.count('nt')
-            total_clusters += 1
             if size > 1:
                 large_clusters += 1
 
         title = REF_FASTA.split('.')[0].split('_')[:-1]
+        title = "_".join(title)
         histo[f"{sim}%"][title] = large_clusters
 
 
