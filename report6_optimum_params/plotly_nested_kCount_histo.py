@@ -38,5 +38,9 @@ fig = go.Figure(data)
 
 
 # Change the bar mode
-fig.update_layout(barmode='group')
+fig.update_layout(barmode='group',)
 plot(fig, filename = 'plotly_histo.html', auto_open=False)
+
+# Change the bar mode
+fig.update_layout(barmode='group', yaxis_type="log")
+plot(fig, filename = 'plotly_histo_log.html', auto_open=False)
