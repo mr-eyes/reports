@@ -17,6 +17,11 @@ ls -1 *fasta > list_reads
 bcalm -kmer-size 75 -max-memory 12000 -out SRR11015356_before_k75 -in list_reads
 ```
 
+#### 1.2.1 cDBG stats
+
+1. Number of unitigs: ???
+2. Number of connected components: ???
+
 ### 1.3 Clustering the cDBG at similarity threshold = 0.95
 
 ```bash
@@ -34,6 +39,11 @@ cat clusters_SRR11015356_before_k75.clstr | grep "\*" | awk -F"[>.]" '{print ">"
 ```bash
 bcalm -kmer-size 75 -max-memory 12000 -out reps_unitigs_SRR11015356_before_k75_after_k75.fa -in reps_unitigs_SRR11015356_before_k75.fa  -abundance-min 1
 ```
+
+#### 1.5.1 cDBG stats
+
+1. Number of unitigs: ???
+2. Number of connected components: ???
 
 ---
 
