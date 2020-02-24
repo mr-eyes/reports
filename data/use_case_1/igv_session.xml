@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Session genome="/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/pipeline/USE_CASE_BAMs/ENST00000602326.5.fa" hasGeneTrack="false" hasSequenceTrack="true" locus="ENST00000602326.5|ENSG00000075151.20|OTTHUMG00000002624.7|OTTHUMT00000467634.1|EIF4G3-212|EIF4G3|6196|protein_coding|:424-606" path="/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/pipeline/USE_CASE_BAMs/igv_session.xml" version="8">
+    <Resources>
+        <Resource path="/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/pipeline/USE_CASE_BAMs/sorted_bowtie2_SRR11015356_before_k75.unitigs.bam"/>
+        <Resource path="/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/pipeline/sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam"/>
+    </Resources>
+    <Panel height="1220" name="Panel1582502114310" width="1864">
+        <Track autoScale="true" clazz="org.broad.igv.sam.CoverageTrack" color="175,175,175" colorScale="ContinuousColorScale;0.0;80.0;255,255,255;175,175,175" fontSize="10" id="/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/pipeline/USE_CASE_BAMs/sorted_bowtie2_SRR11015356_before_k75.unitigs.bam_coverage" name="sorted_bowtie2_SRR11015356_before_k75.unitigs.bam Coverage" snpThreshold="0.2" visible="true">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="33.0" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track clazz="org.broad.igv.sam.SpliceJunctionTrack" fontSize="10" height="60" id="/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/pipeline/USE_CASE_BAMs/sorted_bowtie2_SRR11015356_before_k75.unitigs.bam_junctions" name="sorted_bowtie2_SRR11015356_before_k75.unitigs.bam Junctions" visible="false"/>
+        <Track clazz="org.broad.igv.sam.AlignmentTrack" displayMode="EXPANDED" experimentType="OTHER" fontSize="10" id="/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/pipeline/USE_CASE_BAMs/sorted_bowtie2_SRR11015356_before_k75.unitigs.bam" name="sorted_bowtie2_SRR11015356_before_k75.unitigs.bam" visible="true">
+            <RenderOptions/>
+        </Track>
+    </Panel>
+    <Panel height="191" name="Panel1582502125496" width="1864">
+        <Track autoScale="true" clazz="org.broad.igv.sam.CoverageTrack" color="175,175,175" colorScale="ContinuousColorScale;0.0;10.0;255,255,255;175,175,175" fontSize="10" id="/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/pipeline/sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam_coverage" name="sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam Coverage" snpThreshold="0.2" visible="true">
+            <DataRange baseline="0.0" drawBaseline="true" flipAxis="false" maximum="10.0" minimum="0.0" type="LINEAR"/>
+        </Track>
+        <Track clazz="org.broad.igv.sam.SpliceJunctionTrack" fontSize="10" height="60" id="/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/pipeline/sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam_junctions" name="sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam Junctions" visible="false"/>
+        <Track clazz="org.broad.igv.sam.AlignmentTrack" displayMode="EXPANDED" experimentType="OTHER" fontSize="10" id="/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/pipeline/sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam" name="sorted_bowtie2_reps_unitigs_SRR11015356_before_k75_after_k75.bam" visible="true">
+            <RenderOptions/>
+        </Track>
+    </Panel>
+    <Panel height="56" name="FeaturePanel" width="1864">
+        <Track clazz="org.broad.igv.track.SequenceTrack" fontSize="10" id="Reference sequence" name="Reference sequence" visible="true"/>
+    </Panel>
+    <PanelLayout dividerFractions="0.0073439412484700125,0.7123623011015912,0.9522643818849449"/>
+    <HiddenAttributes>
+        <Attribute name="DATA FILE"/>
+        <Attribute name="DATA TYPE"/>
+        <Attribute name="NAME"/>
+    </HiddenAttributes>
+</Session>
