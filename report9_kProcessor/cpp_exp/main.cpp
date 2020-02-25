@@ -38,10 +38,10 @@ ckf.save("idx_k25_SRR11015356_k75.unitigs")
 using namespace std;
 
 
-int main(){
+int main(int argc, char** argv){
 
-    
-    string fasta_file = "/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/reps_unitigs_SRR11015356_k75.fa";
+    // string fasta_file = "/home/mabuelanin/Desktop/kexpression_experiment/symbolic/data/drtamer_data/reps_unitigs_SRR11015356_k75.fa";
+    string fasta_file = argv[1];
     string names_file = fasta_file + ".names";
 
     int kSize = 25;
