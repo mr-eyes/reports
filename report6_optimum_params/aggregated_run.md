@@ -125,3 +125,7 @@ python plotly_clusters_size.py
 ### 3.3.2 Plot 2 (Log scaled) [Interactive](./plots/agg/plotly_cdhit_log.html)
 
 ![](./plots/agg/plotly_cdhit_log.png?raw=true)
+
+### 3.3.3 Plot 3 (total clusters) [Interactive](./plots/agg/plotly_cdhit_total.html)
+
+![](./plots/agg/plotly_cdhit_total.png?raw=true)
