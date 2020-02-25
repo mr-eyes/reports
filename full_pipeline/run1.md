@@ -19,8 +19,24 @@ bcalm -kmer-size 75 -max-memory 12000 -out SRR11015356_before_k75 -in list_reads
 
 #### 1.2.1 cDBG stats
 
-1. Number of unitigs: ???
-2. Number of connected components: ???
+```bash
+# Converting unitigs to GFA
+python convertToGFA.py SRR11015356_before_k75.unitigs.fa SRR11015356_before_k75.unitigs.fa.gfa 75
+
+# Reducing the GFA size (remove duplicate edges)
+odgi build -g SRR11015356_before_k75.unitigs.fa.gfa -G > reduced_SRR11015356_before_k75.unitigs.fa.gfa
+
+# Getting graph info from Bandage
+Bandage info reduced_SRR11015356_before_k75.unitigs.fa.gfa
+
+<<RESULT
+Node count:                       11,824,622
+Edge count:                       12,050,926
+Total length (bp):                1,133,741,131
+Connected components:             1,906,331
+Largest component (bp):           470,491,350
+RESULT
+```
 
 ### 1.3 Clustering the cDBG at similarity threshold = 0.95
 
@@ -42,8 +58,24 @@ bcalm -kmer-size 75 -max-memory 12000 -out reps_unitigs_SRR11015356_before_k75_a
 
 #### 1.5.1 cDBG stats
 
-1. Number of unitigs: ???
-2. Number of connected components: ???
+```bash
+# Converting unitigs to GFA
+python convertToGFA.py reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa.gfa 75
+
+# Reducing the GFA size (remove duplicate edges)
+odgi build -g reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa.gfa -G > reduced_reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa.gfa
+
+# Getting graph info from Bandage
+Bandage info reduced_reps_unitigs_SRR11015356_before_k75_after_k75.fa.unitigs.fa.gfa
+
+<<RESULT
+Node count:                       1,993,007
+Edge count:                       135,980
+Total length (bp):                298,782,369
+Connected components:             1,860,593
+Largest component (bp):           8,709
+RESULT
+```
 
 ---
 
