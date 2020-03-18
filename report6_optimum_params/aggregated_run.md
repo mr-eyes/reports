@@ -45,6 +45,8 @@ done
 
 ### 1.3 Histogram visualization
 
+<h3><b>The following plots represents the number of kmers with abundance > 1 </b></h3>
+
 ```bash
 python plotly_nested_kCount_histo.py
 ```
